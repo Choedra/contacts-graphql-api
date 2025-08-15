@@ -21,6 +21,9 @@ type Query {
 }
 
 type Mutation {
+  signup(user: SignupInput!): AuthPayload!
+  login(email: String!, password: String!): AuthPayload!
+
   addUser(user: AddUserInput!): User
   updateUser(id: ID!, edits: EditUserInput!): User
   deleteUser(id: ID!): [User]
@@ -49,5 +52,16 @@ input AddContactInput {
 input EditContactInput {
   phone: String
   address: String
+}
+
+input SignupInput {
+  name: String!
+  email: String!
+  password: String!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
 }
 `;
