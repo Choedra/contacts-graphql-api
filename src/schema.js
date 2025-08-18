@@ -46,7 +46,6 @@ input EditUserInput {
 input AddContactInput {
   phone: String!
   address: String
-  userId: ID!
 }
 
 input EditContactInput {
