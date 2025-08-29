@@ -8,6 +8,7 @@ type User {
 
 type Contact {
   id: ID!
+  username: String!
   phone: String!
   address: String
   user: User!
@@ -44,11 +45,13 @@ input EditUserInput {
 }
 
 input AddContactInput {
+  username: String!
   phone: String!
   address: String
 }
 
 input EditContactInput {
+  username: String
   phone: String
   address: String
 }

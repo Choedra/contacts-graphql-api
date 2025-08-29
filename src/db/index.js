@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const client = postgres(process.env.DATABASE_URL);
+const client = postgres(process.env.DATABASE_PUBLIC_URL);
 export const db = drizzle(client);
 
 console.log("✅ Connected to PostgreSQL via Drizzle");

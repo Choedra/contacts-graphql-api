@@ -1,13 +1,13 @@
-import postgres from "postgres";
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const client = postgres(process.env.DATABASE_URL);
-
+// drizzle.config.js
 export default {
-  schema: "./src/db/schema.js",      // path to your Drizzle schema
-  out: "./drizzle/migrations",       // folder to store migrations
-  dialect: "postgresql",             // <--- required
-  dbCredentials: client              // <--- your postgres client
+  schema: "./src/db/schema.js",
+  out: "./drizzle/migrations",
+  dialect: "postgresql",
+  dbCredentials: {
+    host: "ballast.proxy.rlwy.net",
+    port: 37095,
+    database: "railway",
+    user: "postgres",
+    password: "FtaZLnMBdbvmLYwExUTDJlIRfPBFXnFG",
+  },
 };

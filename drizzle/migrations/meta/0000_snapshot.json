@@ -1,5 +1,5 @@
 {
-  "id": "4a30132c-1877-4d48-b620-ee0384dbf890",
+  "id": "28c1646a-05d0-4f76-97a6-2101148bdef1",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -12,6 +12,12 @@
           "name": "id",
           "type": "serial",
           "primaryKey": true,
+          "notNull": true
+        },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
           "notNull": true
         },
         "phone": {
@@ -50,7 +56,15 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "contacts_username_unique": {
+          "name": "contacts_username_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "username"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
