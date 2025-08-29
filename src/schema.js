@@ -30,7 +30,7 @@ type Mutation {
 
   addContact(contact: AddContactInput!): Contact
   updateContact(id: ID!, edits: EditContactInput!): Contact
-  deleteContact(id: ID!): [Contact]
+  deleteContact(id: ID!): Contact
 }
 
 input AddUserInput {
