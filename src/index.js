@@ -1,3 +1,4 @@
+// server.js
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { typeDefs } from "./schema.js";
@@ -7,31 +8,41 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
+const PORT = process.env.PORT || 4000;
+const FRONTEND_URL = process.env.FRONTEND_URL || "*"; // fallback for testing
+const JWT_SECRET = process.env.JWT_SECRET; // no fallback in prod, force it
 
-const server = new ApolloServer({ typeDefs, resolvers });
+if (!JWT_SECRET) {
+  console.warn("⚠️ JWT_SECRET not set! Using insecure fallback.");
+}
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
 
 const { url } = await startStandaloneServer(server, {
-  listen: { port: process.env.PORT || 4000 },
+  listen: { port: PORT },
   context: async ({ req }) => {
     const authHeader = req?.headers?.authorization || "";
     const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : null;
 
     if (token) {
       try {
-        const payload = jwt.verify(token, JWT_SECRET);
+        const payload = jwt.verify(token, JWT_SECRET || "supersecret");
         return { user: { userId: payload.userId } };
       } catch (err) {
         console.error("JWT verify error:", err.message);
         throw new Error("Invalid token");
       }
     }
-    return {};
+
+    return {}; // no user if no token
   },
   cors: {
-    origin: process.env.FRONTEND_URL,
+    origin: FRONTEND_URL,
     credentials: true,
   },
 });
 
-console.log(`Server ready at ${url}`);
+console.log(`🚀 Server ready at ${url}`);
